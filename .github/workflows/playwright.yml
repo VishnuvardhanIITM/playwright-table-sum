@@ -1,0 +1,27 @@
+name: Playwright Table Sum
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps
+
+      - name: Run Playwright - 21f3000557@ds.study.iitm.ac.in
+        run: node scrape.js
