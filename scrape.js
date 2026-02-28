@@ -1,10 +1,6 @@
 const { chromium } = require("playwright");
 
-// 🔴 REPLACE THIS WITH THE REAL BASE URL
-// Example format (DO NOT copy this blindly):
-// const BASE_URL = "https://example.com/?seed=";
-
-const BASE_URL = "PASTE_REAL_BASE_URL_HERE";
+const BASE_URL = "https://sanand0.github.io/tdsdata/js_table/?seed=";
 
 async function scrapeSeed(seed) {
   const browser = await chromium.launch({ headless: true });
@@ -15,10 +11,9 @@ async function scrapeSeed(seed) {
 
   await page.goto(url, { waitUntil: "load" });
 
-  // Wait until table appears (important for dynamic content)
+  // wait for table to load (important for JS page)
   await page.waitForSelector("table");
 
-  // Extract all numeric values from all tables
   const numbers = await page.$$eval("table td", cells =>
     cells
       .map(td => td.innerText.trim())
@@ -28,8 +23,7 @@ async function scrapeSeed(seed) {
 
   await browser.close();
 
-  const sum = numbers.reduce((a, b) => a + b, 0);
-  return sum;
+  return numbers.reduce((a, b) => a + b, 0);
 }
 
 (async () => {
